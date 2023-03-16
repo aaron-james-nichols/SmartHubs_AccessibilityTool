@@ -63,7 +63,7 @@ with col1:
         # user_analysis_name = st.text_input("Enter a name for the analysis")
 
         # Map
-        st.write('Click on the map to add points.')
+        st.write('Zoom into your study area, then click to add points.')
         m1 = f.Map(location = [48.1488436, 11.5680386], zoom_start = 4)
         m1.add_child(f.ClickForMarker(popup="Hub"))
 
