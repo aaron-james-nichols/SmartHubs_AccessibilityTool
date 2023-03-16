@@ -57,7 +57,7 @@ with col1:
         if cost == 'Time':
             cost_value = st.number_input('Enter a maximum travel time (minutes):')
         elif cost == 'Money':
-            cost_value = st.number_input('Enter a maximum travael cost (euros):')
+            cost_value = st.number_input('Enter a maximum travel cost (euros):')
 
         # # Analysis Name
         # user_analysis_name = st.text_input("Enter a name for the analysis")
