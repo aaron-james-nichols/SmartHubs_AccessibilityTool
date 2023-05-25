@@ -3,6 +3,8 @@ import folium as f
 from streamlit_folium import st_folium
 from streamlit_folium import folium_static
 
+st.set_page_config(layout = 'wide')
+
 if 'hub_list' not in st.session_state:
     st.session_state.hub_list = []
 
@@ -49,11 +51,6 @@ else:
 
     start_location = [lat_mid, lon_mid]
 
-    # if lat_mid == 0 and lon_mid == 0:
-    #     start_location = [48.1488436, 11.5680386]
-    # else:
-    #     start_location = [lat_mid, lon_mid]
-
 
 # Map
 if st.session_state.convex_hull == '':
@@ -67,18 +64,17 @@ m2 = f.Map(location = start_location, zoom_start = zoom_level)
 if st.session_state.convex_hull != '':
     f.GeoJson(st.session_state.convex_hull).add_to(m2)
 
-st_data = st_folium(m2, height = 500, width = 1600)
-
-st.session_state.zoom = st_data['zoom']
-
-for hub in st.session_state.hub_list:
-    lat = hub['lat']
-    lon = hub['lon']
-    label = hub['id']
-    f.Marker([lat, lon], popup = label).add_to(m2)
-
 if st.session_state.convex_hull != '':
     f.GeoJson(st.session_state.convex_hull).add_to(m2)
+
+if st.session_state.hub_list != '':
+    for hub in st.session_state.hub_list:
+        lat = hub['lat']
+        lon = hub['lon']
+        label = hub['id']
+        f.Marker(location = [lat, lon], popup = label, tooltip = label).add_to(m2)
+
+st_data = st_folium(m2, height = 500, width = 1600)
 
 # Table
 if st.session_state.polygon_features == []:
