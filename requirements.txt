@@ -1,0 +1,9 @@
+streamlit==1.27.0
+folium==0.14.0
+streamlit_folium==0.14.0
+geopandas
+pandas
+osmnx
+networkx
+shapely
+utm
