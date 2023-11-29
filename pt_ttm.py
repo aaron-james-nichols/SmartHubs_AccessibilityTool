@@ -8,19 +8,6 @@ import osmnx as ox
 import pandas as pd
 import random
 
-# os.system('cls')
-
-# # These are temporary inputs for testing purposes. Delete them later.
-# input_lat = -37.80240195043516
-# input_lon = 144.9634848512107
-#
-# weekday = 'tuesday'
-# start_time = '14:30'
-# max_travel_mins = 60
-# transfers = True
-# max_walk_mins = 10
-# GTFS = ['Victoria/Bus.zip', 'Victoria/Tram.zip', 'Victoria/Metro.zip']
-
 def accessed_stops(input_lat, input_lon, GTFS, transfers, start_time, weekday, max_travel_mins, max_walk_mins):
 
     os.system('cls')
@@ -716,12 +703,3 @@ def accessed_stops(input_lat, input_lon, GTFS, transfers, start_time, weekday, m
             reached_names.add(stop_name)
 
     return simple_dict_list
-
-# stops_accessed = accessed_stops(input_lat, input_lon, GTFS, transfers, start_time, weekday, max_travel_mins, max_walk_mins)
-#
-# # Writes list of accessed stops to a csv.
-# keys = stops_accessed[0].keys()
-# with open('melbourne_stops_test_2.csv', 'w', newline = '') as output_file:
-#     dict_writer = csv.DictWriter(output_file, keys)
-#     dict_writer.writeheader()
-#     dict_writer.writerows(stops_accessed)
