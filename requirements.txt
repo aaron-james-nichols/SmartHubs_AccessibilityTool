@@ -1,9 +1,10 @@
 streamlit==1.27.0
 folium==0.14.0
 streamlit_folium==0.14.0
-geopandas
-pandas
-osmnx
-networkx
-shapely
-utm
+geopandas==0.14.0
+pandas==2.1.2
+osmnx==1.7.1
+networkx==3.2.1
+shapely==2.0.2
+utm==0.7.0
+overpass==0.7
