@@ -1,5 +1,5 @@
-streamlit==1.27.0
-folium==0.14.0
+streamlit
+folium
 streamlit_folium
 geopandas==0.14.0
 pandas==2.1.2
