@@ -60,14 +60,19 @@ allow_amenities = True
 # Opens the CSV containing the osm tags and their corresponding categories.
 osm_tags_csv = open('osm_tags.csv', mode = 'r')
 amenity_dict = {}
+amenity_categories = set()
 for row in osm_tags_csv:
     tags = row.replace('"','').rstrip('\n').split(',')
     key = tags[0]
     value = tags[1]
     amenity_dict[key] = value
+    amenity_categories.add(value)
 
 # Creates a list of the OSM tags that are included.
 osm_amenities = list(set(amenity_dict.keys()))
+
+# Creates a list of the amenity categories.
+amenity_categories = list(amenity_categories)
 
 col1, col2 = st.columns([3,1])
 
@@ -150,7 +155,7 @@ with col1:
             #                 GTFS_file = True
 
             st.header('Amenity Selection')
-            amenities = st.multiselect('Please select the amenities you would like to count within the catchment areas.', ['Restaurant/Cafe/Bar', 'Education', 'Service', 'Healthcare', 'Supermarket', 'Entertainment'])
+            amenities = st.multiselect('Please select the amenities you would like to count within the catchment areas.', amenity_categories)
             st.session_state.amenities = amenities
 
             st.header('Location Selection')
