@@ -4,12 +4,12 @@ from streamlit_folium import st_folium
 from folium.plugins import Draw
 import datetime
 import ast
-import zone_finder as zf
+# import zone_finder as zf
 import isochrones as iso
 import amenities as amen
 import pt_ttm as pt
-import utm
-import time
+# import utm
+# import time
 import geopandas as gpd
 import pandas as pd
 import json
@@ -145,6 +145,7 @@ with col1:
                         filename = file.name
                         if filename[len(filename) - 4:] == '.zip':
                             GTFS_file = True
+
             # if public_transport:
             #     st.write('**You must upload GTFS data if analyzing public transport.**')
             #     uploaded_file = st.file_uploader('Upload a .zip file containing GTFS data.', accept_multiple_files = True)
@@ -211,7 +212,7 @@ with col1:
 
                 if (walk or bike or escooter or public_transport) and amenities and len(st.session_state.hub_list) > 0:
                     if public_transport and GTFS_file == True:
-                        if st.button('Run Analysis'):
+                        if st.button('Run Analysis', type = 'primary'):
 
                             if walk:
                                 mode_settings.append({'mode':'Walk', 'walk_travel_mins':walk_travel_mins, 'walk_speed':walk_speed})
@@ -231,8 +232,8 @@ with col1:
                             inputs = True
                             input_container.empty()
 
-                    else:
-                        if st.button('Run Analysis'):
+                    elif (walk or bike or escooter):
+                        if st.button('Run Analysis', type = 'primary'):
 
                             if walk:
                                 mode_settings.append({'mode':'Walk', 'walk_travel_mins':walk_travel_mins, 'walk_speed':walk_speed})
@@ -243,14 +244,37 @@ with col1:
                                     mode_settings.append({'mode':'E-Scooter', 'scoot_cost':scoot_cost, 'scoot_travel_mins':scoot_travel_mins})
                                 elif scoot_cost == 'Money':
                                     mode_settings.append({'mode':'E-Scooter', 'scoot_cost':scoot_cost, 'scoot_travel_euro':scoot_travel_euro})
-                            if public_transport:
-                                if transfers:
-                                    mode_settings.append({'mode':'Public Transport', 'weekday':weekday, 'start_time':start_time, 'max_travel_mins':max_travel_mins, 'max_walk_mins':max_walk_mins, 'pt_walk_speed':pt_walk_speed, 'transfers':True})
-                                else:
-                                    mode_settings.append({'mode':'Public Transport', 'weekday':weekday, 'start_time':start_time, 'max_travel_mins':max_travel_mins, 'max_walk_mins':max_walk_mins, 'pt_walk_speed':pt_walk_speed, 'transfers':False})
+
+                                    
+                            # if public_transport:
+                            #     if transfers:
+                            #         mode_settings.append({'mode':'Public Transport', 'weekday':weekday, 'start_time':start_time, 'max_travel_mins':max_travel_mins, 'max_walk_mins':max_walk_mins, 'pt_walk_speed':pt_walk_speed, 'transfers':True})
+                            #     else:
+                            #         mode_settings.append({'mode':'Public Transport', 'weekday':weekday, 'start_time':start_time, 'max_travel_mins':max_travel_mins, 'max_walk_mins':max_walk_mins, 'pt_walk_speed':pt_walk_speed, 'transfers':False})
 
                             inputs = True
                             input_container.empty()
+
+                    # else:
+                    #     if st.button('Run Analysis'):
+
+                    #         if walk:
+                    #             mode_settings.append({'mode':'Walk', 'walk_travel_mins':walk_travel_mins, 'walk_speed':walk_speed})
+                    #         if bike:
+                    #             mode_settings.append({'mode':'Bike', 'bike_travel_mins':bike_travel_mins, 'bike_speed':bike_speed})
+                    #         if escooter:
+                    #             if scoot_cost == 'Time':
+                    #                 mode_settings.append({'mode':'E-Scooter', 'scoot_cost':scoot_cost, 'scoot_travel_mins':scoot_travel_mins})
+                    #             elif scoot_cost == 'Money':
+                    #                 mode_settings.append({'mode':'E-Scooter', 'scoot_cost':scoot_cost, 'scoot_travel_euro':scoot_travel_euro})
+                    #         if public_transport:
+                    #             if transfers:
+                    #                 mode_settings.append({'mode':'Public Transport', 'weekday':weekday, 'start_time':start_time, 'max_travel_mins':max_travel_mins, 'max_walk_mins':max_walk_mins, 'pt_walk_speed':pt_walk_speed, 'transfers':True})
+                    #             else:
+                    #                 mode_settings.append({'mode':'Public Transport', 'weekday':weekday, 'start_time':start_time, 'max_travel_mins':max_travel_mins, 'max_walk_mins':max_walk_mins, 'pt_walk_speed':pt_walk_speed, 'transfers':False})
+
+                    #         inputs = True
+                    #         input_container.empty()
 
         if inputs == True:
 
@@ -563,7 +587,7 @@ with col1:
         if len(st.session_state.polygon_features) > 0:
             for polygon in st.session_state.polygon_features:
                 style = lambda feature:{'color':color_dict[feature['properties']['mode']]}
-                f.GeoJson(polygon, style_function = style).add_to(m2)
+                f.GeoJson(polygon, style_function = style, tooltip = polygon['features'][0]['properties']['mode']).add_to(m2)
 
         if len(st.session_state.hub_list) > 0:
             for hub in st.session_state.hub_list:
