@@ -4,7 +4,8 @@ import overpass
 def get_amenities(min_lat, min_lon, max_lat, max_lon):
 
     bbox_coordinates = str(min_lat) + ',' + str(min_lon) + ',' + str(max_lat) + ',' + str(max_lon)
-    api = overpass.API(endpoint = 'https://overpass.private.coffee/api/interpreter', timeout = 3600)
+    api = overpass.API(endpoint = 'https://overpass-api.de/api/interpreter', timeout = 3600)
+    # api = overpass.API(endpoint = 'https://overpass.private.coffee/api/interpreter', timeout = 3600)
     # api = overpass.API(endpoint = 'https://maps.mail.ru/osm/tools/overpass/api/interpreter', timeout = 3600)
     features = []
 
